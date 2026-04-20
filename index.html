@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عبدالله الشهري — مطوّر برمجيات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+      background: #0a0a0f;
+      color: #e8e6f0;
+      overflow-x: hidden;
+    }
+
+    .en { font-family: 'Space Grotesk', sans-serif; direction: ltr; display: inline-block; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: #c8f0a0; letter-spacing: 0.05em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: rgba(232,230,240,0.6); font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #c8f0a0; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 7rem 3rem 6rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(200,240,160,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em;
+      color: #c8f0a0; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 600; line-height: 1.1; margin-bottom: 0.5rem; }
+    .hero h1 span { color: #c8f0a0; }
+    .hero-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(232,230,240,0.45); margin-bottom: 2.5rem;
+      font-weight: 400; letter-spacing: 0.02em;
+    }
+    .hero-desc { max-width: 520px; font-size: 1rem; line-height: 1.8; color: rgba(232,230,240,0.65); margin-bottom: 3rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 0.85rem 2rem; border-radius: 50px;
+      background: #c8f0a0; color: #0a0a0f;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 0.9rem;
+      border: none; cursor: pointer; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: #d8f5b8; transform: translateY(-2px); }
+    .btn-ghost {
+      padding: 0.85rem 2rem; border-radius: 50px;
+      background: transparent; color: #e8e6f0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500; font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.35); }
+    .hero-stats { display: flex; gap: 3rem; margin-top: 5rem; }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: #c8f0a0; }
+    .stat-label { font-size: 0.75rem; color: rgba(232,230,240,0.4); margin-top: 0.25rem; }
+
+    /* SECTIONS */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #c8f0a0; margin-bottom: 1rem;
+    }
+    .section-title { font-size: 2rem; font-weight: 600; margin-bottom: 3rem; line-height: 1.2; }
+
+    /* SKILLS */
+    .skills-bg { background: #0d0d14; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 1.75rem; transition: all 0.3s;
+    }
+    .skill-card:hover { border-color: rgba(200,240,160,0.3); background: rgba(200,240,160,0.04); }
+    .skill-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .skill-name { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem; padding: 0.25rem 0.65rem;
+      border-radius: 20px; background: rgba(200,240,160,0.1);
+      color: #c8f0a0; border: 1px solid rgba(200,240,160,0.2);
+    }
+
+    /* PROJECTS */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .project-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 2rem;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #c8f0a0, transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover { border-color: rgba(200,240,160,0.25); transform: translateY(-4px); }
+    .project-card:hover::before { opacity: 1; }
+    .project-num { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; color: rgba(200,240,160,0.5); margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .project-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .project-desc { font-size: 0.9rem; color: rgba(232,230,240,0.55); line-height: 1.7; margin-bottom: 1.25rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .stack-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem; padding: 0.2rem 0.6rem;
+      border-radius: 4px; background: rgba(255,255,255,0.06);
+      color: rgba(232,230,240,0.6);
+    }
+
+    /* EXPERIENCE */
+    .exp-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 2rem;
+      display: flex; gap: 2rem; align-items: flex-start; margin-bottom: 1.5rem;
+    }
+    .exp-dot {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(200,240,160,0.1);
+      border: 1px solid rgba(200,240,160,0.3);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1.1rem;
+    }
+    .exp-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem; }
+    .exp-meta { font-size: 0.82rem; color: rgba(232,230,240,0.45); margin-bottom: 0.75rem; }
+    .exp-desc { font-size: 0.88rem; color: rgba(232,230,240,0.6); line-height: 1.7; }
+
+    /* CONTACT */
+    .contact-bg { background: #0d0d14; }
+    .contact-inner {
+      max-width: 600px;
+      background: rgba(200,240,160,0.05);
+      border: 1px solid rgba(200,240,160,0.15);
+      border-radius: 24px; padding: 3rem;
+    }
+    .contact-email { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; color: #c8f0a0; text-decoration: none; display: block; margin-bottom: 1rem; }
+    .contact-info { font-size: 0.88rem; color: rgba(232,230,240,0.5); line-height: 2; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: rgba(232,230,240,0.3);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.15s; opacity: 0; }
+    .delay-2 { animation-delay: 0.3s; opacity: 0; }
+    .delay-3 { animation-delay: 0.45s; opacity: 0; }
+    .delay-4 { animation-delay: 0.6s; opacity: 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 6rem 1.5rem 4rem; }
+      .hero-stats { gap: 2rem; }
+      .exp-card { flex-direction: column; gap: 1rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo en">AS</div>
+  <ul class="nav-links">
+    <li><a href="#hero">الرئيسية</a></li>
+    <li><a href="#projects">المشاريع</a></li>
+    <li><a href="#skills">المهارات</a></li>
+    <li><a href="#contact">التواصل</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero">
+  <p class="hero-tag fade-up">مطوّر برمجيات</p>
+  <h1 class="fade-up delay-1">عبدالله<br><span>الشهري.</span></h1>
+  <p class="hero-sub fade-up delay-2">Full-Stack Developer & CS Graduate</p>
+  <p class="hero-desc fade-up delay-3">
+    خريج علوم حاسب بمعدل 3.95 — أبني تطبيقات ويب متكاملة وأحوّل الأفكار إلى منتجات رقمية قابلة للتوسع.
+  </p>
+  <div class="hero-btns fade-up delay-4">
+    <a class="btn-primary" href="#contact">تواصل معي</a>
+    <a class="btn-ghost" href="#projects">استعرض مشاريعي</a>
+  </div>
+  <div class="hero-stats fade-up delay-4">
+    <div class="stat">
+      <div class="stat-num en">3.95</div>
+      <div class="stat-label">المعدل التراكمي</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num en">1+</div>
+      <div class="stat-label">مشروع منجز</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num en">5+</div>
+      <div class="stat-label">لغة برمجة</div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-bg" id="skills">
+  <p class="section-label">الخبرات</p>
+  <h2 class="section-title">مهاراتي التقنية</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⌨️</div>
+      <div class="skill-name">البرمجة</div>
+      <div class="skill-tags">
+        <span class="tag en">Java</span>
+        <span class="tag en">Python</span>
+        <span class="tag en">C#</span>
+        <span class="tag en">PHP</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">تطوير الويب</div>
+      <div class="skill-tags">
+        <span class="tag en">HTML</span>
+        <span class="tag en">CSS</span>
+        <span class="tag en">JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">قواعد البيانات</div>
+      <div class="skill-tags">
+        <span class="tag en">SQL</span>
+        <span class="tag">تصميم قواعد البيانات</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🛠️</div>
+      <div class="skill-name">أدوات التطوير</div>
+      <div class="skill-tags">
+        <span class="tag en">Git</span>
+        <span class="tag en">GitHub</span>
+        <span class="tag en">Unity</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔗</div>
+      <div class="skill-name">الشبكات</div>
+      <div class="skill-tags">
+        <span class="tag">إدارة الشبكات</span>
+        <span class="tag">الصيانة</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💬</div>
+      <div class="skill-name">اللغات</div>
+      <div class="skill-tags">
+        <span class="tag">العربية — لغة أم</span>
+        <span class="tag">الإنجليزية — ممتازة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <p class="section-label">الأعمال</p>
+  <h2 class="section-title">مشاريعي</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num en">01</div>
+      <div class="project-title">منصة بيع الكتب الجامعية المستعملة</div>
+      <div class="project-desc">
+        تطبيق ويب متكامل يتيح لطلاب الجامعة بيع وشراء الكتب الدراسية. يشمل نظام تسجيل، إدارة إعلانات، وبحث متقدم.
+      </div>
+      <div class="project-stack">
+        <span class="stack-tag en">PHP</span>
+        <span class="stack-tag en">HTML</span>
+        <span class="stack-tag en">CSS</span>
+        <span class="stack-tag en">JavaScript</span>
+        <span class="stack-tag en">SQL</span>
+      </div>
+    </div>
+    <div class="project-card" style="opacity:0.5; border-style: dashed;">
+      <div class="project-num en">02</div>
+      <div class="project-title" style="color:rgba(232,230,240,0.4)">مشروع قادم...</div>
+      <div class="project-desc">أضف مشاريعك الأخرى هنا لإبراز خبرتك.</div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-bg">
+  <p class="section-label">الخبرة</p>
+  <h2 class="section-title">التجربة العملية</h2>
+  <div class="exp-card">
+    <div class="exp-dot">🏛️</div>
+    <div>
+      <div class="exp-title">متدرب — شبكات وتقنية المعلومات</div>
+      <div class="exp-meta">بلدية محافظة بارق · شهران · منطقة عسير</div>
+      <div class="exp-desc">إدارة ومتابعة شبكات الحاسب الآلي، صيانة الأجهزة الشبكية وحل المشكلات التقنية، والتعاون مع فريق تقنية المعلومات لضمان استمرارية الخدمات.</div>
+    </div>
+  </div>
+  <div class="exp-card">
+    <div class="exp-dot">🎓</div>
+    <div>
+      <div class="exp-title">بكالوريوس علوم الحاسب — معدل 3.95</div>
+      <div class="exp-meta">جامعة الملك خالد · أبها · تخرج 2024</div>
+      <div class="exp-desc">دراسة متعمقة في هندسة البرمجيات، قواعد البيانات، الشبكات، وتطوير التطبيقات. تخرج بمعدل مرتفع ضمن أفضل الخريجين.</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-bg" id="contact">
+  <p class="section-label">التواصل</p>
+  <h2 class="section-title">تواصل معي</h2>
+  <div class="contact-inner">
+    <p style="font-size:0.9rem; color:rgba(232,230,240,0.6); margin-bottom:1.75rem; line-height:1.8;">
+      مهتم بفرص العمل أو التعاون في مشاريع؟ لا تتردد في التواصل.
+    </p>
+    <a class="contact-email" href="mailto:avpvpy@gmail.com">avpvpy@gmail.com</a>
+    <div class="contact-info">
+      📍 أبها، المملكة العربية السعودية<br>
+      📞 <span class="en">+966 53 005 1318</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>عبدالله الشهري · 2025</span>
+  <span class="en">Abdullah Alshehri — Portfolio</span>
+</footer>
+
+</body>
+</html>
